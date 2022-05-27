@@ -1,5 +1,10 @@
 # YRAP - Your Routines and Projects
 
+# NOTE:
+
+This project is just in early stage development, so expect both the code and this readme to change
+significantly.
+
 ## What Is YRAP All About
 
 This project is very personal, and so it's usage may not be useful to most people.  However,
