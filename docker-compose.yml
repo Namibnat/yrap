@@ -5,20 +5,33 @@ services:
     container_name: 'backend'
     build: ./backend
     volumes:
+      - static_volume:/app/static
       - ./backend/:/usr/src/app/
     ports:
-      - 8000:8000
+      - '8000:8000'
     depends_on:
       - yrap_db
   yrap_db:
     image: postgres:14-alpine
     container_name: 'yrap_db'
     ports:
-      - "5432:5432"
+      - '5432:5432'
     env_file:
       - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+  nginx:
+    container_name: 'yrap_nginx'
+    build: ./yrap_nginx
+    depends_on:
+      - backend
+    ports:
+      - '80:80'
+    volumes:
+      - static_volume:/app/static
+    environment:
+      ALLOWED_HOSTS: 127.0.0.1,0.0.0.0,localhost
 
 volumes:
   postgres_data:
+  static_volume:
