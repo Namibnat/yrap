@@ -1,4 +1,4 @@
-FROM node:18-bullseye
+FROM python:18-bullseye
 
 RUN apt update -y && apt install python-3.10.2
 
