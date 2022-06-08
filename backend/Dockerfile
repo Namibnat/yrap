@@ -1,20 +1,12 @@
-FROM python:3.10-bullseye
+FROM python:buster
 
-RUN apt update -y
+WORKDIR /app
 
-WORKDIR /usr/src/app/
+COPY ./requirements.txt .
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PYTHONPATH=/usr/src/app/ \
-    DJANGO_SETTINGS_MODULE=web.settings \
-    PORT=8000 \
-    WEB_CONCURRENCY=3
+RUN apt update -y && \
+    pip install --update pip && \
+    pip install requirements.txt
 
-COPY ./requirements.txt /usr/src/app//requirements.txt
+COPY . .
 
-RUN pip install --upgrade pip && pip install -r requirements.txt
-
-COPY . /usr/src/app/
-
-CMD ["sh", "entrypoint.sh"]

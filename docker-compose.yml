@@ -1,35 +1,26 @@
-version: '3.8'
+version: "3.8"
 
 services:
   backend:
-    container_name: 'backend'
+    container_name: "backend"
     build: ./backend
-    stdin_open: true
-    tty: true
-    volumes:
-      - static_volume:/usr/src/app/static
-      - ./backend:/usr/src/app
-    ports:
-      - '8000:8000'
     depends_on:
       - yrap_db
     networks:
       - nginx_network
       - db_network
-  # frontend:
-  #   container_name: 'frontend'
-  #   build: ./frontend
-  #   volumes:
-  #     - ./frontend/yrap_front:/usr/src/app/
-  #   ports:
-  #     - '3080:3080'
-  #   depends_on:
-  #     - backend
+  frontend:
+    container_name: "frontend"
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
   yrap_db:
-    container_name: 'yrap_db'
+    container_name: "yrap_db"
     image: postgres:14-alpine
     ports:
-      - '5432:5432'
+      - "5432:5432"
     env_file:
       - .env
     volumes:
@@ -37,19 +28,17 @@ services:
     networks:
       - db_network
   nginx:
-    container_name: 'yrap_nginx'
+    container_name: "yrap_nginx"
     build: ./yrap_nginx
     ports:
-      - '80:80'
-    volumes:
-      - static_volume:/usr/src/app/static
+      - "80:80"
     environment:
       ALLOWED_HOSTS: 127.0.0.1,0.0.0.0,localhost
     networks:
       - nginx_network
     depends_on:
       - backend
-      # - frontend
+      - frontend
 
 networks:
   nginx_network:

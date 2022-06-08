@@ -1,3 +1,0 @@
-"""URLconf for yrap"""
-
-pass
