@@ -6,7 +6,7 @@ COPY ./requirements.txt .
 
 RUN apt update -y && \
     pip install --update pip && \
-    pip install requirements.txt
+    pip install -r requirements.txt
 
 COPY . .
 
