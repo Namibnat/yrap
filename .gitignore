@@ -167,3 +167,11 @@ cython_debug/
 *.vsixdb.sqlite3
 db.sqlite3
 .env*
+
+# For React
+node_modules
+.cache
+dist/
+coverage/
+.parcel-cache
+
