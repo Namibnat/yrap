@@ -175,3 +175,4 @@ dist/
 coverage/
 .parcel-cache
 
+.vscode
