@@ -2,20 +2,23 @@ version: "3.8"
 
 services:
   backend:
-    container_name: "backend"
     build: ./backend
+    container_name: "backend"
+    command: python manage.py run -h 0.0.0.0
+    ports:
+      - "5050:5000"
     depends_on:
       - yrap_db
     networks:
-      - nginx_network
+      #     - nginx_network
       - db_network
-  frontend:
-    container_name: "frontend"
-    build: ./frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
+  # frontend:
+  #   container_name: "frontend"
+  #   build: ./frontend
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - backend
   yrap_db:
     container_name: "yrap_db"
     image: postgres:14-alpine
@@ -24,28 +27,31 @@ services:
     env_file:
       - .env
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data
+    environment:
+      - POSTGRES_USER=yrap
+      - POSTGRES_PASSWORD=hashedpassword
+      - POSTGRES_DB=yrap_dev
     networks:
       - db_network
-  nginx:
-    container_name: "yrap_nginx"
-    build: ./yrap_nginx
-    ports:
-      - "80:80"
-    environment:
-      ALLOWED_HOSTS: 127.0.0.1,0.0.0.0,localhost
-    networks:
-      - nginx_network
-    depends_on:
-      - backend
-      - frontend
-
+  # nginx:
+  #   container_name: "yrap_nginx"
+  #   build: ./yrap_nginx
+  #   ports:
+  #     - "80:80"
+  #   environment:
+  #     ALLOWED_HOSTS: 127.0.0.1,0.0.0.0,localhost
+  # networks:
+  #   - nginx_network
+  # depends_on:
+  #   - backend
+  #   - frontend
 networks:
-  nginx_network:
-    driver: bridge
+  #   nginx_network:
+  #     driver: bridge
   db_network:
     driver: bridge
 
 volumes:
   postgres_data:
-  static_volume:
+#   static_volume:

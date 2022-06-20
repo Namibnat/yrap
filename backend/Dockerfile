@@ -1,12 +1,14 @@
-FROM python:buster
+FROM python:3.10.5-buster
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY ./requirements.txt .
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-RUN apt update -y && \
-    pip install --update pip && \
-    pip install -r requirements.txt
 
-COPY . .
+RUN apt update -y && pip install --upgrade pip
+COPY ./requirements.txt /usr/src/app/requirements.txt
+    
+RUN pip install -r requirements.txt
 
+COPY . /usr/src/app/
