@@ -1,0 +1,12 @@
+.ContentFrame {
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+    margin: 0 auto !important;
+    width: 100%;
+}
+
+.ContentFrameContent {
+    margin: 0 auto !important;
+    max-width: 90%;
+    padding: 1rem 0 0 0;
+}
