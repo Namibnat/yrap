@@ -7,9 +7,8 @@ flask run -h 127.0.0.1 -p 5555
 """
 
 from uuid import uuid4
-from flask import Flask, jsonify
-
-app = Flask(__name__)
+from .main import app, jsonify
+from .models import Project
 
 
 def gen_key():
@@ -18,16 +17,16 @@ def gen_key():
 
 @app.route('/', methods=['GET'])
 def home():
-    return jsonify(hello="world")
+    return jsonify(test="alive")
+
+# @app.route('/', methods=['POST'])
+# def add_project():
+
 
 
 @app.route('/projects/', methods=['GET'])
 def projects():
-    data = [
-        {'id': 1, 'key': gen_key(), 'title': 'Project', 'slug': 'project'},
-        {'id': 2, 'key': gen_key(), 'title': 'Do donkey', 'slug': 'do_donkey'},
-        {'id': 3, 'key': gen_key(), 'title': 'Go to buy stuff', 'slug': 'go_shop'},
-    ]
-    response = jsonify(projects=data)
+    data = Project.query.all()
+    response = jsonify(projects=[{'id': i.id, 'key': i.key, 'title': i.title, 'slug': i.slug} for i in data])
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response

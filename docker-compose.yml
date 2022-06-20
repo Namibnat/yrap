@@ -7,11 +7,15 @@ services:
     command: python manage.py run -h 0.0.0.0
     ports:
       - "5050:5000"
+    env_file:
+      - ./backend/.env.dev
     depends_on:
       - yrap_db
     networks:
       #     - nginx_network
       - db_network
+    volumes:
+      - ./backend/:/usr/src/app/
   # frontend:
   #   container_name: "frontend"
   #   build: ./frontend
@@ -25,13 +29,9 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - .env
+      - ./.env.dev
     volumes:
-      - postgres_data
-    environment:
-      - POSTGRES_USER=yrap
-      - POSTGRES_PASSWORD=hashedpassword
-      - POSTGRES_DB=yrap_dev
+      - postgres_data:/var/lib/postgresql/data/
     networks:
       - db_network
   # nginx:
