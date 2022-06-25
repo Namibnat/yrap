@@ -1,0 +1,9 @@
+.projectDetails {
+    display: block;
+}
+
+.projectDetails a,
+.projectDetails a:visited {
+    color: rgb(9, 18, 150);
+    text-decoration: none;
+}

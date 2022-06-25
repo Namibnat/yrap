@@ -12,7 +12,7 @@
     align-items: center;
     max-width: 90%;
     justify-content: flex-start;
-    height: 2.3rem;
+    height: 3.3rem;
 }
 
 .navbarFrameContent a,
@@ -41,7 +41,7 @@ a:visited {
 
 .navbarFrameContent h1 {
     display: flex;
-    font-size: 1rem;
+    font-size: 1.6rem;
     justify-content: flex-start;
     animation: wingtTitle 0.4s;
     margin: 0;
@@ -51,7 +51,7 @@ a:visited {
 
 .navbarFrameContent h2 {
     display: flex;
-    font-size: 0.8rem;
+    font-size: 1.3rem;
     flex-grow: 1;
     margin: 0 0 0 0.6rem;
     color: #1894d1;
@@ -67,7 +67,7 @@ a:visited {
     padding: 0;
     list-style: none;
     justify-content: flex-end;
-    font-size: 0.8rem;
+    font-size: 1.5rem;
     animation: wingNav 3s;
 }
 

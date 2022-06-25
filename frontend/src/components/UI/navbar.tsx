@@ -24,13 +24,13 @@ const NavBar: React.FC<IApplication> = () => {
               <span className={styles.navbarFrameDivs}>|</span>
             </li>
             <li>
-              <a href="#">Routines</a>
+              <a href="/routines/">Routines</a>
             </li>
             <li>
               <span className={styles.navbarFrameDivs}>|</span>
             </li>
             <li>
-              <a href="#">Weekly Review</a>
+              <a href="/weekly/">Weekly Review</a>
             </li>
           </ul>
         </div>
