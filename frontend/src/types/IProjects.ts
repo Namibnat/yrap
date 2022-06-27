@@ -7,5 +7,6 @@ export default interface IProject {
   key?: string;
   title: string;
   slug: string;
+  done_when: string;
   actions?: IActions[];
 }

@@ -8,6 +8,7 @@ import { faUpload } from "@fortawesome/free-solid-svg-icons";
 
 const Projects = (): JSX.Element => {
   const [newProjectTitle, setNewProjectTitle] = useState<string>("");
+  const [newProjectDoneWhen, setNewProjectDoneWhen] = useState<string>("");
 
   const queryClient = useQueryClient();
 
@@ -49,16 +50,18 @@ const Projects = (): JSX.Element => {
         key: "tmp",
         title: newProjectTitle,
         slug: slug,
+        done_when: newProjectDoneWhen,
       };
       addProjectMutation.mutate(form_json);
       setNewProjectTitle("");
+      setNewProjectDoneWhen("");
     }
   };
 
   return (
     <div className={styles.projectsFrame}>
       <h2>Projects</h2>
-      <div className={styles.projectsFrameContent}>
+      <div className={styles.addProjectsFrameContent}>
         <h4>Add A Project</h4>
         <form onSubmit={(e) => addNewProject(e)}>
           <label htmlFor="title">Title</label>
@@ -69,6 +72,14 @@ const Projects = (): JSX.Element => {
             name="title"
             placeholder="project title"
           ></input>
+          <label htmlFor="done_when">The project will be done when...</label>
+          <textarea
+            onChange={(e) => setNewProjectDoneWhen(e.target.value)}
+            value={newProjectDoneWhen}
+            name="done_when"
+          >
+            "{newProjectTitle}" will be done when...
+          </textarea>
           <button className="submit">
             <FontAwesomeIcon icon={faUpload} />
           </button>

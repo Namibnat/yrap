@@ -7,3 +7,11 @@
     color: rgb(9, 18, 150);
     text-decoration: none;
 }
+
+.Action {
+    margin: 1rem 0 0.4rem 0;
+}
+
+.ActionDescription {
+    margin: 0 2rem 0 0;
+}

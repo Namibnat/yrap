@@ -19,16 +19,21 @@ def create_db():
     print('all created')
     db.session.commit()
 
+
 @cli.command("seed_db")
 def seed_db():
     data = [
-        {'id': 1, 'key': gen_key(), 'title': 'First Project', 'slug': 'first_project'},
-        {'id': 2, 'key': gen_key(), 'title': 'another', 'slug': 'anther_project'},
+        {'id': 1, 'key': gen_key(), 'title': 'First Project',
+         'slug': 'first_project'},
+        {'id': 2, 'key': gen_key(), 'title': 'Another', 'slug': 'anther_project'},
         {'id': 3, 'key': gen_key(), 'title': 'Go to buy stuff', 'slug': 'go_shop'},
     ]
     for value in data:
-        db.session.add(Project(key=value['key'], title=value['title'], slug=value['slug']))
+        value['down_when'] = f"'{value['title']}' will be done when... it's finished"
+        db.session.add(
+            Project(key=value['key'], title=value['title'], slug=value['slug'], done_when=value['down_when']))
     db.session.commit()
+
 
 if __name__ == '__main__':
     cli()

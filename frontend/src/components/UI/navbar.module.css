@@ -54,7 +54,7 @@ a:visited {
     font-size: 1.3rem;
     flex-grow: 1;
     margin: 0 0 0 0.6rem;
-    color: #1894d1;
+    color: rgb(227, 71, 10);
     justify-content: flex-start;
     font-weight: 400;
 }
@@ -69,6 +69,10 @@ a:visited {
     justify-content: flex-end;
     font-size: 1.5rem;
     animation: wingNav 3s;
+}
+
+.navbarFrameIcon {
+    color: #4c4848;
 }
 
 .navbarFrameNavList li {

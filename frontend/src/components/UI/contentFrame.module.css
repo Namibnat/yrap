@@ -1,6 +1,5 @@
 .ContentFrame {
     box-sizing: border-box;
-    background-color: rgb(255, 255, 255);
     margin: 0 auto !important;
     width: 100%;
 }

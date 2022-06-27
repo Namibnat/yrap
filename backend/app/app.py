@@ -52,7 +52,7 @@ def add_project():
     data["key"] = gen_key()
     try:
         new_project = Project(
-            *[data['key'], data['title'], clean_slug(data['slug'])])
+            *[data['key'], data['title'], clean_slug(data['slug']), data['done_when']])
         db.session.add(new_project)
         db.session.commit()
     except Exception as error:
@@ -61,7 +61,7 @@ def add_project():
     return response_helper(jsonify(post="success, data added"), HTTP._201)
 
 
-@app.route("/api/projects/detail/<project_slug>/action/<action_id>", methods=["PATCH", "DELETE"])
+@app.route("/api/projects/detail/<project_slug>/action/<action_id>/", methods=["PATCH", "DELETE"])
 def update_project_action(project_slug, action_id):
     """PATCH & DELETE for project actions"""
     project = Project.query.filter_by(slug=project_slug).first()
@@ -98,7 +98,8 @@ def add_project_action(project_slug):
     data["key"] = gen_key()
     try:
         project = Project.query.filter_by(slug=project_slug).first()
-        new_action = Action(project.id, *[data['key'], data['description']])
+        new_action = Action(
+            project.id, *[data['key'], data['description'], data['date_added']])
         db.session.add(new_action)
         db.session.commit()
     except Exception as error:
@@ -113,13 +114,13 @@ def project_detail(project_slug):
     try:
         project = Project.query.filter_by(slug=project_slug).first()
         project_return = {'id': project.id, 'key': project.key,
-                          'title': project.title, 'slug': project.slug}
+                          'title': project.title, 'slug': project.slug, 'done_when': project.done_when}
     except Exception as error:
         return error_helper(jsonify(error=f"Error fetching project: error -> {error}"))
     try:
         actions = Action.query.filter_by(project=project.id)
         project_return['actions'] = (
-            [{'description': action.description, 'key': action.key} for action in actions])
+            [{'id': action.id, 'description': action.description, 'key': action.key, 'date_added': action.date_added} for action in actions])
     except Exception as error:
         return error_helper(jsonify(error=f"Error fetching actions: error -> {error}"))
     return get_helper(jsonify(project_return))
@@ -132,4 +133,5 @@ def projects():
         data = Project.query.all()
     except Exception as error:
         return error_helper(jsonify(error=f"Error fetching projects: error -> {error}"))
-    return get_helper(jsonify([{'id': i.id, 'key': i.key, 'title': i.title, 'slug': i.slug} for i in data]))
+    return get_helper(jsonify(
+        [{'id': i.id, 'key': i.key, 'title': i.title, 'slug': i.slug, 'done_when': i.done_when} for i in data]))
