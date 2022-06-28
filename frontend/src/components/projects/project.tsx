@@ -15,6 +15,8 @@ import {
   faUpload,
   faPen,
   faXmark,
+  faSquareCheck,
+  faSquare,
 } from "@fortawesome/free-solid-svg-icons";
 
 const ProjectDetail = () => {
@@ -122,13 +124,22 @@ const ProjectDetail = () => {
                     )}
                     {editAction !== action.id && (
                       <>
-                        {action.description}
+                        {action.description}&nbsp;&nbsp;-&nbsp;&nbsp;
+                        {action.date_added}&nbsp;&nbsp;-&nbsp;&nbsp;
                         <button
                           className="edit"
                           onClick={(e) => editActionDesc(action.id)}
                         >
                           <FontAwesomeIcon icon={faPen} />
                         </button>
+                        <span className={styles.Grey19}>
+                          &nbsp;&nbsp; --- TODO &nbsp;&nbsp;
+                          <FontAwesomeIcon icon={faSquareCheck} />
+                          &nbsp;vs&nbsp;
+                          <FontAwesomeIcon icon={faSquare} />
+                          &nbsp;&nbsp; TODO --- &nbsp;&nbsp; (and add state,
+                          active, this_week, deleted)
+                        </span>
                       </>
                     )}
 
