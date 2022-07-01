@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./projects.module.css";
+import styles from "./projects.module.scss";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getProjects, createProject } from "../../queries/projectsQueries";
 import IProject from "../../types/IProjects";

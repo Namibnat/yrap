@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import styles from "./contentFrame.module.css";
+import styles from "./contentFrame.module.scss";
 
 interface Props {
   children?: ReactNode;

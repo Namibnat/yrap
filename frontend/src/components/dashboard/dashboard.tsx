@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import styles from "./dashboard.module.css";
+import styles from "./dashboard.module.scss";
 
 interface Props {
   children?: ReactNode;
@@ -11,37 +11,30 @@ const Dashboard = (props: Props): JSX.Element => {
         <div className={styles.DashboardProjectActions}>
           <h3>Work on this week</h3>
           <ul>
-            <li className={styles.HighlightColor}>rgb(227, 71, 10)</li>
-            <li className={styles.Grey0}>rgb(0,0,0)</li>
-            <li className={styles.Grey1}>rgb(10,10,10)</li>
-            <li className={styles.Grey2}>rgb(20,20,20)</li>
-            <li className={styles.Grey3}>rgb(30,30,30)</li>
-            <li className={styles.HighlightColor}>rgb(227, 71, 10)</li>
-            <li className={styles.Grey4}>rgb(40,40,40)</li>
-            <li className={styles.Grey5}>rgb(50,50,50)</li>
-            <li className={styles.Grey6}>rgb(60,60,60)</li>
-            <li className={styles.Grey7}>rgb(70,70,70)</li>
-            <li className={styles.Grey8}>rgb(80,80,80)</li>
-            <li className={styles.Grey9}>rgb(90,90,90)</li>
-            <li className={styles.Grey10}>rgb(100,100,100)</li>
-            <li className={styles.Grey11}>rgb(110,110,110)</li>
-            <li className={styles.Grey12}>rgb(120,120,120)</li>
-            <li className={styles.Grey13}>rgb(130,130,130)</li>
-            <li className={styles.HighlightColor}>rgb(227, 71, 10)</li>
-            <li className={styles.Grey14}>rgb(140,140,140)</li>
-            <li className={styles.Grey15}>rgb(150,150,150)</li>
-            <li className={styles.Grey16}>rgb(160,160,160)</li>
-            <li className={styles.Grey17}>rgb(170,170,170)</li>
-            <li className={styles.Grey18}>rgb(180,180,180)</li>
-            <li className={styles.Grey19}>rgb(190,190,190)</li>
-            <li className={styles.Grey20}>rgb(200,200,200)</li>
-            <li className={styles.Grey21}>rgb(210,210,210)</li>
-            <li className={styles.Grey22}>rgb(220,220,220)</li>
-            <li className={styles.Grey23}>rgb(230,230,230)</li>
-            <li className={styles.HighlightColor}>rgb(227, 71, 10)</li>
-            <li className={styles.Grey24}>rgb(240,240,240)</li>
-            <li className={styles.Grey25}>rgb(250,250,250)</li>
-            <li className={styles.HighlightColor}>rgb(227, 71, 10)</li>
+            <li className={styles.TurnHighlightColor}>
+              rgb(227, 71, 10) HighlightColor
+            </li>
+            <li className={styles.TurnBlack}>rgb(0,0,0) Black</li>
+
+            <li className={styles.TurnWhite}>rgb(255, 255, 255) White</li>
+            <li className={styles.TurnGrey1}>rgb(10,10,10) Grey1</li>
+            <li className={styles.TurnGrey2}>rgb(20,20,20) Grey2</li>
+            <li className={styles.TurnGrey3}>rgb(30,30,30) Grey3</li>
+            <li className={styles.TurnHighlightColor}>
+              rgb(227, 71, 10) HighlightColor
+            </li>
+            <li className={styles.TurnGrey4}>rgb(40,40,40) Grey4</li>
+            <li className={styles.TurnGrey5}>rgb(50,50,50) Grey5</li>
+            <li className={styles.TurnGrey6}>rgb(60,60,60) Grey6</li>
+            <li className={styles.TurnGrey7}>rgb(70,70,70) Grey7</li>
+            <li className={styles.TurnGrey8}>rgb(80,80,80) Grey8</li>
+            <li className={styles.TurnGrey9}>rgb(90,90,90) Grey9</li>
+            <li className={styles.TurnGrey10}>rgb(100,100,100) Grey10</li>
+            <li className={styles.TurnGrey11}>rgb(110,110,110) Grey11</li>
+            <li className={styles.TurnGrey12}>rgb(120,120,120) Grey12</li>
+            <li className={styles.TurnHighlightColor}>
+              rgb(227, 71, 10) HighlightColor
+            </li>
             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
             <li>
               Praesent non mauris molestie, volutpat lacus et, ultricies est.

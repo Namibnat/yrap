@@ -1,0 +1,12 @@
+@use "../styles/_colors.scss" as colors;
+
+/*
+*/
+
+.MainFrame {
+    margin: 0 !important;
+    max-width: 100%;
+    padding: 0;
+    border: none;
+    color: colors.$Grey1;
+}

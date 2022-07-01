@@ -1,11 +1,16 @@
+@use "../styles/_colors.scss" as colors;
+
+/*
+*/
+
 .footerFrame {
     box-sizing: border-box;
-    background-color: rgb(255, 255, 255);
+    background-color: colors.$YRAPWhite;
     margin: 2rem auto 1rem auto !important;
     padding: 0.5rem 0 0 0;
     width: 100%;
     border: none;
-    border-top: 1px solid rgb(227, 71, 10);
+    border-top: 1px solid colors.$HighlightColor;
 }
 
 .footerFrameContent {

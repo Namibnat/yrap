@@ -1,0 +1,31 @@
+@use "../styles/_colors.scss" as colors;
+
+/*
+*/
+
+.projectDetails {
+    display: block;
+}
+
+.projectDetails a,
+.projectDetails a:visited {
+    color: colors.$LinksMain;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.projectDetails a:hover {
+    color: colors.$LinksHover;
+}
+
+.Action {
+    margin: 1rem 0 0.4rem 0;
+}
+
+.ActionDescription {
+    margin: 0 2rem 0 0;
+}
+
+.FixThisUp {
+    background-color: rgb(205, 7, 149);
+}

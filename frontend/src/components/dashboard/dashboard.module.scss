@@ -1,0 +1,79 @@
+@use "../styles/_colors.scss" as colors;
+
+/*
+*/
+
+.footerFrame {
+    box-sizing: border-box;
+    background-color: colors.$YRAPWhite;
+    margin: 2rem auto 1rem auto !important;
+    padding: 0.5rem 0 0 0;
+    width: 100%;
+    border: none;
+    border-top: 1px solid colors.$HighlightColor;
+}
+
+.footerFrameContent {
+    margin: 0 auto !important;
+    max-width: 90%;
+}
+
+.TurnHighlightColor {
+    background-color: colors.$HighlightColor;
+}
+
+.TurnBlack {
+    background-color: colors.$YRAPBlack;
+}
+
+.TurnWhite {
+    background-color: colors.$YRAPWhite;
+}
+
+.TurnGrey1 {
+    background-color: colors.$Grey1;
+}
+
+.TurnGrey2 {
+    background-color: colors.$Grey2;
+}
+
+.TurnGrey3 {
+    background-color: colors.$Grey3;
+}
+
+.TurnGrey4 {
+    background-color: colors.$Grey4;
+}
+
+.TurnGrey5 {
+    background-color: colors.$Grey5;
+}
+
+.TurnGrey6 {
+    background-color: colors.$Grey6;
+}
+
+.TurnGrey7 {
+    background-color: colors.$Grey7;
+}
+
+.TurnGrey8 {
+    background-color: colors.$Grey8;
+}
+
+.TurnGrey9 {
+    background-color: colors.$Grey9;
+}
+
+.TurnGrey10 {
+    background-color: colors.$Grey10;
+}
+
+.TurnGrey11 {
+    background-color: colors.$Grey11;
+}
+
+.TurnGrey12 {
+    background-color: colors.$Grey12;
+}

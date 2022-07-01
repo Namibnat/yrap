@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./project.module.css";
+import styles from "./project.module.scss";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import {
   getProject,
@@ -74,6 +74,9 @@ const ProjectDetail = () => {
           <h2>{project.title}</h2>
           <p>{project.done_when}</p>
           <div className={styles.addActionFormContainer}>
+            <p>
+              {/* <TODO:  ...move forms into their own container in separate files... /> */}
+            </p>
             <form onSubmit={(e) => addNewProjectAction(e)}>
               <input
                 onChange={(e) => setNewProjectActionDesc(e.target.value)}
@@ -132,13 +135,13 @@ const ProjectDetail = () => {
                         >
                           <FontAwesomeIcon icon={faPen} />
                         </button>
-                        <span className={styles.Grey19}>
-                          &nbsp;&nbsp; --- TODO &nbsp;&nbsp;
+                        <span className={styles.FixThisUp}>
+                          FixThisUp - &nbsp;&nbsp; --- TODO &nbsp;&nbsp;
                           <FontAwesomeIcon icon={faSquareCheck} />
                           &nbsp;vs&nbsp;
                           <FontAwesomeIcon icon={faSquare} />
                           &nbsp;&nbsp; TODO --- &nbsp;&nbsp; (and add state,
-                          active, this_week, deleted)
+                          active, this_week, deleted) - FixThisUp
                         </span>
                       </>
                     )}

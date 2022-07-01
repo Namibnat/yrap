@@ -1,13 +1,18 @@
+@use "../styles/_colors.scss" as colors;
+
+/*
+*/
+
 .navbarFrame {
     box-sizing: border-box;
-    background-color: #333333;
+    background-color: colors.$Grey2;
     margin: 0 auto !important;
     width: 100%;
 }
 
 .navbarFrameContent {
     margin: 0 auto !important;
-    color: rgb(255, 255, 255);
+    color: colors.$YRAPWhite;
     display: flex;
     align-items: center;
     max-width: 90%;
@@ -18,22 +23,22 @@
 .navbarFrameContent a,
 a:visited {
     text-decoration: none;
-    color: #fff;
+    color: colors.$YRAPWhite;
 }
 
 .navbarFrameContent a:hover {
     text-decoration: none;
     box-sizing: border-box;
-    color: rgb(227, 71, 10);
-    background-color: rgb(51, 51, 51);
+    color: colors.$HighlightColor;
+    background-color: colors.$Grey3;
     border: none;
     border-radius: 100px;
-    box-shadow: 5px 5px 20px rgb(35, 18, 18);
+    box-shadow: 5px 5px 40px colors.$Grey3;
 }
 
 .navbarFrameDivs {
     display: flex;
-    color: rgb(227, 71, 10);
+    color: colors.$HighlightColor;
     margin: 0;
     padding: 0;
     font-weight: 100;
@@ -43,7 +48,7 @@ a:visited {
     display: flex;
     font-size: 1.6rem;
     justify-content: flex-start;
-    animation: wingtTitle 0.4s;
+    animation: wingTitle 2s;
     margin: 0;
     padding: 0;
     font-weight: 700;
@@ -79,18 +84,31 @@ a:visited {
     flex-shrink: 1;
 }
 
-@keyframes wingtTitle {
+@keyframes wingTitle {
     0% {
         opacity: 0.3;
-        transform: translateX(0);
+        color: colors.$HighlightColor;
+        transform: translate(0, 0);
     }
-    80% {
+    5% {
         opacity: 0.9;
-        transform: translateX(-10px);
+        color: colors.$HighlightColor;
+        transform: translate(-3px, 3px);
+    }
+    10% {
+        opacity: 0.9;
+        color: colors.$HighlightColor;
+        transform: translate(-3px, 0);
+    }
+    90% {
+        opacity: 0.9;
+        color: colors.$HighlightColor;
+        transform: translateY(0, 0);
     }
     100% {
         opacity: 1;
-        transform: translateX(0);
+        color: colors.$YRAPWhite;
+        transform: translateY(0, 0);
     }
 }
 
