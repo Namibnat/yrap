@@ -5,14 +5,16 @@ TODO: Add logging
 
 import re
 from uuid import uuid4
-from .main import (app, cross_origin, CORS, jsonify, make_response, request)
+from .main import (app, jsonify, make_response, request)
 from .models import db, Action, Project
 from .helper import HTTP
+from flask_cors import CORS, cross_origin
+
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 
 def gen_key():
-    return str(uuid4()).replace('-', '&')
+    return uuid4().hex
 
 
 def response_helper(payload, http_status):
@@ -23,11 +25,11 @@ def response_helper(payload, http_status):
 
 
 def error_helper(payload):
-    return response_helper(payload, HTTP._500)
+    return response_helper(payload, HTTP.h500)
 
 
 def get_helper(payload):
-    return response_helper(payload, HTTP._200)
+    return response_helper(payload, HTTP.h200)
 
 
 @app.route('/', methods=['GET'])
@@ -37,18 +39,22 @@ def home():
 
 
 def clean_slug(slug):
-    regex = re.compile('[^a-zA-Z0-9_]')
+    regex = re.compile(r'\W+')
     return regex.sub('_', slug)
 
 
 @app.route('/api/projects/add/', methods=['POST'])
 def add_project():
     """Create a new project"""
+    data = {}
     try:
         data = request.json
     except Exception as error:
         error_helper(
             jsonify(error=f"Error creating project: error -> {error}"))
+    if not data:
+        error_helper(
+            jsonify(error=f"Error creating project: error -> No data received"))
     data["key"] = gen_key()
     try:
         new_project = Project(
@@ -58,7 +64,7 @@ def add_project():
     except Exception as error:
         error_helper(
             jsonify(error=f"Error creating project: error -> {error}"))
-    return response_helper(jsonify(post="success, data added"), HTTP._201)
+    return response_helper(jsonify(post="success, data added"), HTTP.h201)
 
 
 @app.route("/api/projects/detail/<project_slug>/action/<action_id>/", methods=["PATCH", "DELETE"])
@@ -78,17 +84,17 @@ def update_project_action(project_slug, action_id):
             db.session.commit()
         except Exception as error:
             return error_helper(jsonify(error=f"Error patching action: error: {error}"))
-        return response_helper(jsonify(post="success, data updated"), HTTP._200)
+        return response_helper(jsonify(post="success, data updated"), HTTP.h200)
     if request.method == "DELETE":
         try:
             db.session.delete(action)
             db.session.commit()
         except Exception as error:
             return error_helper(jsonify(error=f"Error patching action: error: {error}"))
-        return response_helper(jsonify(post="success, action deleted"), HTTP._200)
+        return response_helper(jsonify(post="success, action deleted"), HTTP.h200)
 
 
-@ app.route("/api/projects/detail/<project_slug>/action/", methods=["POST"])
+@app.route("/api/projects/detail/<project_slug>/action/", methods=["POST"])
 def add_project_action(project_slug):
     """Add an action to a project"""
     try:
@@ -104,10 +110,10 @@ def add_project_action(project_slug):
         db.session.commit()
     except Exception as error:
         return error_helper(jsonify(error=f"Error creating action: error -> {error}"))
-    return response_helper(jsonify(post="success, data added"), HTTP._201)
+    return response_helper(jsonify(post="success, data added"), HTTP.h201)
 
 
-@ app.route('/api/projects/detail/<project_slug>/', methods=['GET'])
+@app.route('/api/projects/detail/<project_slug>/', methods=['GET'])
 def project_detail(project_slug):
     """Get a project by slug
     """
@@ -120,13 +126,14 @@ def project_detail(project_slug):
     try:
         actions = Action.query.filter_by(project=project.id)
         project_return['actions'] = (
-            [{'id': action.id, 'description': action.description, 'key': action.key, 'date_added': action.date_added} for action in actions])
+            [{'id': action.id, 'description': action.description, 'key': action.key, 'date_added': action.date_added}
+             for action in actions])
     except Exception as error:
         return error_helper(jsonify(error=f"Error fetching actions: error -> {error}"))
     return get_helper(jsonify(project_return))
 
 
-@ app.route('/api/projects/', methods=['GET'])
+@app.route('/api/projects/', methods=['GET'])
 def projects():
     """Get all projects"""
     try:

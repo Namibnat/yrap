@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./project.module.scss";
 import { useQuery, useMutation, useQueryClient } from "react-query";
+import NewProjectForm from "./newProjectForm";
 import {
   getProject,
   addAction,
@@ -74,21 +75,11 @@ const ProjectDetail = () => {
           <h2>{project.title}</h2>
           <p>{project.done_when}</p>
           <div className={styles.addActionFormContainer}>
-            <p>
-              {/* <TODO:  ...move forms into their own container in separate files... /> */}
-            </p>
-            <form onSubmit={(e) => addNewProjectAction(e)}>
-              <input
-                onChange={(e) => setNewProjectActionDesc(e.target.value)}
-                type="text"
-                name="description"
-                placeholder="Add action"
-                value={newProjectActionDesc}
-              />
-              <button className="submit">
-                <FontAwesomeIcon icon={faUpload} />
-              </button>
-            </form>
+            <NewProjectForm
+              addNewProjectAction={addNewProjectAction}
+              setNewProjectActionDesc={setNewProjectActionDesc}
+              newProjectActionDesc={newProjectActionDesc}
+            />
           </div>
           {project.actions &&
             project.actions.map((action) => {
