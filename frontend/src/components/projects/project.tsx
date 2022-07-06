@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./project.module.scss";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import NewProjectForm from "./newProjectForm";
+import EditProjectAction from "./editProjectAction";
 import {
   getProject,
   addAction,
@@ -88,26 +89,12 @@ const ProjectDetail = () => {
                   <div className={styles.ActionDescription}>
                     {editAction === action.id && (
                       <>
-                        <form
-                          onSubmit={() =>
-                            updateProjectAction.mutate({
-                              action_ref: action,
-                              new_desc: curActionDescVal,
-                            })
-                          }
-                        >
-                          <input
-                            type="text"
-                            placeholder={action.description}
-                            name="description"
-                            onChange={(e) =>
-                              setCurActionDescVal(e.target.value)
-                            }
-                          />
-                          <button className="submit">
-                            <FontAwesomeIcon icon={faUpload} />
-                          </button>
-                        </form>
+                        <EditProjectAction
+                          updateProjectAction={updateProjectAction}
+                          deleteProjectAction={deleteProjectAction}
+                          action={action}
+                          setEditAction={setEditAction}
+                        />
                         <button
                           className="edit"
                           onClick={(e) => editActionDesc(action.id)}
@@ -136,7 +123,6 @@ const ProjectDetail = () => {
                         </span>
                       </>
                     )}
-
                     <button
                       className="trash"
                       onClick={() => deleteProjectAction.mutate(action.id)}
