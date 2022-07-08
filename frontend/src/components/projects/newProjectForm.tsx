@@ -15,18 +15,20 @@ const NewProjectForm = ({
   newProjectActionDesc,
 }: Props) => {
   return (
-    <form onSubmit={(e) => addNewProjectAction(e)}>
-      <input
-        onChange={(e) => setNewProjectActionDesc(e.target.value)}
-        type="text"
-        name="description"
-        placeholder="Add action"
-        value={newProjectActionDesc}
-      />
-      <button className="submit">
-        <FontAwesomeIcon icon={faUpload} />
-      </button>
-    </form>
+    <>
+      <form onSubmit={(e) => addNewProjectAction(e)}>
+        <input
+          onChange={(e) => setNewProjectActionDesc(e.target.value)}
+          type="text"
+          name="description"
+          placeholder="Add action"
+          value={newProjectActionDesc}
+        />
+        <button className="submit">
+          <FontAwesomeIcon icon={faUpload} />
+        </button>
+      </form>
+    </>
   );
 };
 

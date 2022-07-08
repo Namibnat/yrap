@@ -14,9 +14,7 @@ import IActions from "../../types/IActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrash,
-  faUpload,
   faPen,
-  faXmark,
   faSquareCheck,
   faSquare,
 } from "@fortawesome/free-solid-svg-icons";
@@ -64,6 +62,7 @@ const ProjectDetail = () => {
   };
 
   let projectsContent;
+
   if (loadingProject) {
     projectsContent = <p>Loading...</p>;
   } else if (errorProject) {
@@ -91,16 +90,11 @@ const ProjectDetail = () => {
                       <>
                         <EditProjectAction
                           updateProjectAction={updateProjectAction}
-                          deleteProjectAction={deleteProjectAction}
                           action={action}
-                          setEditAction={setEditAction}
+                          setCurActionDescVal={setCurActionDescVal}
+                          curActionDescVal={curActionDescVal}
+                          editActionDesc={editActionDesc}
                         />
-                        <button
-                          className="edit"
-                          onClick={(e) => editActionDesc(action.id)}
-                        >
-                          <FontAwesomeIcon icon={faXmark} />
-                        </button>
                       </>
                     )}
                     {editAction !== action.id && (
