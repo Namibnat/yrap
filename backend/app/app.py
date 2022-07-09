@@ -8,9 +8,9 @@ from uuid import uuid4
 from .main import (app, jsonify, make_response, request)
 from .models import db, Action, Project
 from .helper import HTTP
-from flask_cors import CORS, cross_origin
+import flask_cors as cors
 
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+cors = cors.CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 
 def gen_key():
@@ -115,8 +115,7 @@ def add_project_action(project_slug):
 
 @app.route('/api/projects/detail/<project_slug>/', methods=['GET'])
 def project_detail(project_slug):
-    """Get a project by slug
-    """
+    """Get a project by slug"""
     try:
         project = Project.query.filter_by(slug=project_slug).first()
         project_return = {'id': project.id, 'key': project.key,
@@ -126,8 +125,8 @@ def project_detail(project_slug):
     try:
         actions = Action.query.filter_by(project=project.id)
         project_return['actions'] = (
-            [{'id': action.id, 'description': action.description, 'key': action.key, 'date_added': action.date_added}
-             for action in actions])
+            [{'id': action.id, 'description': action.description, 'key': action.key,
+              'date_added': action.date_added, 'done': action.done} for action in actions])
     except Exception as error:
         return error_helper(jsonify(error=f"Error fetching actions: error -> {error}"))
     return get_helper(jsonify(project_return))

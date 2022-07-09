@@ -26,9 +26,11 @@ class Action(db.Model):
         'projects.id'), nullable=False)
     description = db.Column(db.String(255), nullable=False)
     date_added = db.Column(db.String(255), nullable=False)
+    done = db.Column(db.Boolean, nullable=False, default=False)
 
-    def __init__(self, project_id, key, description, date_added):
+    def __init__(self, project_id, key, description, date_added, done=False):
         self.project = project_id
         self.key = key
         self.description = description
         self.date_added = date_added
+        self.done = done
