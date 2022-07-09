@@ -34,6 +34,15 @@ export const updateAction = async (action_info: IUpdateAction) => {
   );
 };
 
+export const updateDoneAction = async (action: IActions) => {
+  action.done = !action.done;
+  console.log(action);
+  return await projectAPI.patch(
+    `/projects/detail/${slug()}/action/${action.id}/`,
+    action
+  );
+};
+
 export const deleteAction = async (action_id: number) => {
   return await projectAPI.delete(
     `/projects/detail/${slug()}/action/${action_id}/`

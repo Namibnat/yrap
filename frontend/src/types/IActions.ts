@@ -6,4 +6,5 @@ export default interface IActions {
   description: string;
   this_week?: boolean;
   date_added?: string;
+  done: boolean;
 }

@@ -3,11 +3,13 @@ import styles from "./project.module.scss";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import NewProjectForm from "./newProjectForm";
 import EditProjectAction from "./editProjectAction";
+import MarkDone from "./markDone";
 import {
   getProject,
   addAction,
   deleteAction,
   updateAction,
+  updateDoneAction,
 } from "../../queries/projectQueries";
 import IProject from "../../types/IProjects";
 import IActions from "../../types/IActions";
@@ -46,6 +48,9 @@ const ProjectDetail = () => {
   const updateProjectAction = useMutation(updateAction, {
     onSuccess: () => invalProjects(),
   });
+  const updateActionDone = useMutation(updateDoneAction, {
+    onSuccess: () => invalProjects(),
+  });
   const deleteProjectAction = useMutation(deleteAction, {
     onSuccess: () => invalProjects(),
   });
@@ -56,6 +61,7 @@ const ProjectDetail = () => {
       id: UNSET,
       key: "tmp",
       description: newProjectActionDesc,
+      done: false,
     };
     addProjectActionMutation.mutate(form_json);
     setNewProjectActionDesc("");
@@ -101,20 +107,16 @@ const ProjectDetail = () => {
                       <>
                         {action.description}&nbsp;&nbsp;-&nbsp;&nbsp;
                         {action.date_added}&nbsp;&nbsp;-&nbsp;&nbsp;
+                        <MarkDone
+                          action={action}
+                          updateActionDone={updateActionDone}
+                        />
                         <button
                           className="edit"
                           onClick={(e) => editActionDesc(action.id)}
                         >
                           <FontAwesomeIcon icon={faPen} />
                         </button>
-                        <span className={styles.FixThisUp}>
-                          FixThisUp - &nbsp;&nbsp; --- TODO &nbsp;&nbsp;
-                          <FontAwesomeIcon icon={faSquareCheck} />
-                          &nbsp;vs&nbsp;
-                          <FontAwesomeIcon icon={faSquare} />
-                          &nbsp;&nbsp; TODO --- &nbsp;&nbsp; (and add state,
-                          active, this_week, deleted) - FixThisUp
-                        </span>
                       </>
                     )}
                     <button

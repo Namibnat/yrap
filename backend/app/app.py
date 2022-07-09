@@ -80,6 +80,7 @@ def update_project_action(project_slug, action_id):
             return error_helper(jsonify(error=f"Error patching action: error: {error}"))
         try:
             action.description = data.get('description', action.description)
+            action.done = data.get('done', action.done)
             db.session.merge(action)
             db.session.commit()
         except Exception as error:
