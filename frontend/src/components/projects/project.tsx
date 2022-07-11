@@ -14,12 +14,8 @@ import {
 import IProject from "../../types/IProjects";
 import IActions from "../../types/IActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrash,
-  faPen,
-  faSquareCheck,
-  faSquare,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
+import moment from "moment";
 
 const ProjectDetail = () => {
   const UNSET = -1;
@@ -87,48 +83,62 @@ const ProjectDetail = () => {
               newProjectActionDesc={newProjectActionDesc}
             />
           </div>
-          {project.actions &&
-            project.actions.map((action) => {
-              return (
-                <div className={styles.Action} key={action.key}>
-                  <div className={styles.ActionDescription}>
-                    {editAction === action.id && (
-                      <>
-                        <EditProjectAction
-                          updateProjectAction={updateProjectAction}
-                          action={action}
-                          setCurActionDescVal={setCurActionDescVal}
-                          curActionDescVal={curActionDescVal}
-                          editActionDesc={editActionDesc}
-                        />
-                      </>
-                    )}
-                    {editAction !== action.id && (
-                      <>
-                        {action.description}&nbsp;&nbsp;-&nbsp;&nbsp;
-                        {action.date_added}&nbsp;&nbsp;-&nbsp;&nbsp;
-                        <MarkDone
-                          action={action}
-                          updateActionDone={updateActionDone}
-                        />
-                        <button
-                          className="edit"
-                          onClick={(e) => editActionDesc(action.id)}
-                        >
-                          <FontAwesomeIcon icon={faPen} />
-                        </button>
-                      </>
-                    )}
-                    <button
-                      className="trash"
-                      onClick={() => deleteProjectAction.mutate(action.id)}
-                    >
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+          {project.actions && project.actions.length > 0 ? (
+            <>
+              <h4>Actions on the project</h4>
+              <ul className={styles.actionsList}>
+                {project.actions &&
+                  project.actions.map((action) => {
+                    return (
+                      <li className={styles.Action} key={action.key}>
+                        <div className={styles.ActionDescription}>
+                          {editAction === action.id && (
+                            <EditProjectAction
+                              updateProjectAction={updateProjectAction}
+                              action={action}
+                              setCurActionDescVal={setCurActionDescVal}
+                              curActionDescVal={curActionDescVal}
+                              editActionDesc={editActionDesc}
+                            />
+                          )}
+                          {editAction !== action.id && (
+                            <>
+                              <span className={styles.ActionDescriptionText}>
+                                {action.description}
+                              </span>
+                              <span className={styles.ActionDescriptionDate}>
+                                Added:{" "}
+                                {moment(action.date_added).format("DD-MM-YYYY")}
+                              </span>
+                              <MarkDone
+                                action={action}
+                                updateActionDone={updateActionDone}
+                              />
+                              <button
+                                className="edit"
+                                onClick={(e) => editActionDesc(action.id)}
+                              >
+                                <FontAwesomeIcon icon={faPen} />
+                              </button>
+                            </>
+                          )}
+                          <button
+                            className="trash"
+                            onClick={() =>
+                              deleteProjectAction.mutate(action.id)
+                            }
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </div>
+                      </li>
+                    );
+                  })}
+              </ul>
+            </>
+          ) : (
+            <p>No actions yet</p>
+          )}
         </>
       );
     }

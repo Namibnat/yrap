@@ -3,6 +3,12 @@
 /*
 */
 
+h4 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-top: 2.4rem;
+}
+
 .projectDetails {
     display: block;
 }
@@ -26,6 +32,17 @@
     margin: 0 2rem 0 0;
 }
 
-.FixThisUp {
-    background-color: rgb(205, 7, 149);
+.ActionDescriptionText {
+    padding-right: 2rem;
+    text-transform: capitalize;
+}
+
+.ActionDescriptionDate {
+    padding-right: 2rem;
+    color: colors.$Grey6;
+}
+
+.actionsList {
+    list-style-type: disc;
+    margin-bottom: 2.5rem;
 }

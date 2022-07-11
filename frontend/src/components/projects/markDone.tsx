@@ -21,9 +21,9 @@ const MarkDone = ({ action, updateActionDone }: Props) => {
     <>
       <button onClick={() => updateActionDone.mutate(action)}>
         {action && action.done ? (
-          <FontAwesomeIcon icon={faSquareCheck} border />
+          <FontAwesomeIcon icon={faSquareCheck} />
         ) : (
-          <FontAwesomeIcon icon={faSquare} border />
+          <FontAwesomeIcon icon={faSquare} />
         )}
       </button>
     </>
