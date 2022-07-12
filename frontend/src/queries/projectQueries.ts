@@ -49,4 +49,12 @@ export const deleteAction = async (action_id: number) => {
   );
 };
 
+export const thisWeekAction = async (action: IActions) => {
+  action.this_week = !action.this_week;
+  return await projectAPI.patch(
+    `/projects/detail/${slug()}/action/${action.id}/`,
+    action
+  );
+};
+
 export default projectAPI;

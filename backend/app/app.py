@@ -81,6 +81,7 @@ def update_project_action(project_slug, action_id):
         try:
             action.description = data.get('description', action.description)
             action.done = data.get('done', action.done)
+            action.this_week = data.get('this_week', action.this_week)
             db.session.merge(action)
             db.session.commit()
         except Exception as error:
@@ -120,14 +121,16 @@ def project_detail(project_slug):
     try:
         project = Project.query.filter_by(slug=project_slug).first()
         project_return = {'id': project.id, 'key': project.key,
-                          'title': project.title, 'slug': project.slug, 'done_when': project.done_when}
+                          'title': project.title, 'slug': project.slug,
+                          'done_when': project.done_when}
     except Exception as error:
         return error_helper(jsonify(error=f"Error fetching project: error -> {error}"))
     try:
         actions = Action.query.filter_by(project=project.id)
         project_return['actions'] = (
             [{'id': action.id, 'description': action.description, 'key': action.key,
-              'date_added': action.date_added, 'done': action.done} for action in actions])
+              'date_added': action.date_added, 'done': action.done,
+              'this_week': action.this_week} for action in actions])
     except Exception as error:
         return error_helper(jsonify(error=f"Error fetching actions: error -> {error}"))
     return get_helper(jsonify(project_return))

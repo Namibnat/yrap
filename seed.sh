@@ -20,6 +20,7 @@ curl -X GET  http://localhost:5050/api/projects/
 echo "Add an action"
 read -s -k $'?Press any key to start...\n'
 curl -X POST -H "Content-Type: application/json" -d '{"description": "buy a thing", "date_added": "2022-06-27T06:43:24.281Z"}' http://localhost:5050/api/projects/detail/go_shop/action/
+curl -X POST -H "Content-Type: application/json" -d '{"description": "Wash a thing", "date_added": "2022-06-27T06:43:24.281Z"}' http://localhost:5050/api/projects/detail/go_shop/action/
 echo "Check the action is in the project"
 read -s -k $'?Press any key to start...\n'
 curl -X GET  http://localhost:5050/api/projects/detail/go_shop/

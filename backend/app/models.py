@@ -27,10 +27,12 @@ class Action(db.Model):
     description = db.Column(db.String(255), nullable=False)
     date_added = db.Column(db.String(255), nullable=False)
     done = db.Column(db.Boolean, nullable=False, default=False)
+    this_week = db.Column(db.Boolean, nullable=False, default=False)
 
-    def __init__(self, project_id, key, description, date_added, done=False):
+    def __init__(self, project_id, key, description, date_added, done=False, this_week=False):
         self.project = project_id
         self.key = key
         self.description = description
         self.date_added = date_added
         self.done = done
+        self.this_week = this_week

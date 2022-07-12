@@ -58,6 +58,7 @@ const ProjectDetail = () => {
       key: "tmp",
       description: newProjectActionDesc,
       done: false,
+      this_week: false,
     };
     addProjectActionMutation.mutate(form_json);
     setNewProjectActionDesc("");
@@ -106,6 +107,11 @@ const ProjectDetail = () => {
                               <span className={styles.ActionDescriptionText}>
                                 {action.description}
                               </span>
+                              {action.this_week && (
+                                <span className={styles.ActionDescriptionWeek}>
+                                  Due this week
+                                </span>
+                              )}
                               <span className={styles.ActionDescriptionDate}>
                                 Added:{" "}
                                 {moment(action.date_added).format("DD-MM-YYYY")}
