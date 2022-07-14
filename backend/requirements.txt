@@ -12,3 +12,4 @@ PyJWT==2.4.0
 six==1.16.0
 SQLAlchemy==1.4.39
 Werkzeug==2.1.2
+pyjwt==2.4.0

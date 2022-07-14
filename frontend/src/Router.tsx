@@ -4,6 +4,7 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import Dashboard from "./components/dashboard/dashboard";
 import Projects from "./components/projects/projects";
+import Login from "./components/login/login";
 import ProjectDetail from "./components/projects/project";
 import { NavBar, OuterFrame, Footer, ContentFrame } from "./components/UI";
 
@@ -19,6 +20,7 @@ const Router: React.FC<IApplication> = () => {
         <ContentFrame>
           <BrowserRouter>
             <Routes>
+              <Route path="login/" element={<Login />} />
               <Route path="/" element={<Dashboard />} />
               <Route path="projects/" element={<Projects />} />
               <Route

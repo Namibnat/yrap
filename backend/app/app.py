@@ -3,12 +3,15 @@
 TODO: Add logging
 """
 
+# from datetime import datetime, timedelta
 import re
-from uuid import uuid4
-from .main import (app, jsonify, make_response, request)
-from .models import db, Action, Project
-from .helper import HTTP
+
 import flask_cors as cors
+import jwt
+from uuid import uuid4
+from .main import (app, datetime, jsonify, make_response, request)
+from .models import db, Action, Project, User
+from .helper import HTTP
 
 cors = cors.CORS(app, resources={r"/api/*": {"origins": "*"}})
 
@@ -145,3 +148,30 @@ def projects():
         return error_helper(jsonify(error=f"Error fetching projects: error -> {error}"))
     return get_helper(jsonify(
         [{'id': i.id, 'key': i.key, 'title': i.title, 'slug': i.slug, 'done_when': i.done_when} for i in data]))
+
+
+@app.route('/api/login/', methods=['POST'])
+def login():
+    """Login with jwt"""
+    data = {}
+    try:
+        data = request.json
+    except Exception as error:
+        return error_helper(jsonify(error=f"Error logging in: error -> {error}"))
+    if not data:
+        return error_helper(jsonify(error="Error logging in: error -> No data received"))
+    try:
+        user = User.query.filter_by(
+            username=data['username'], password=data['password']).first()
+    except Exception as error:
+        return error_helper(jsonify(error=f"Error logging in: error -> {error}"))
+    if not user:
+        return error_helper(jsonify(error="Error logging in: error -> User not found"))
+    try:
+        token = jwt.encode(
+            {'user_id': user.id,
+             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+            app.config['SECRET_KEY'])
+    except Exception as error:
+        return error_helper(jsonify(error=f"Error logging in: error -> {error}"))
+    return response_helper(jsonify(token=token.decode('UTF-8'), user=user), HTTP.h200)
