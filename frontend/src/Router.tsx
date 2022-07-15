@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Redirect } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import Dashboard from "./components/dashboard/dashboard";
@@ -13,6 +13,15 @@ export interface IApplication {}
 const queryClient = new QueryClient();
 
 const Router: React.FC<IApplication> = () => {
+  const isAuthenticated = () => {
+    return true;
+  };
+  const ProtectedRoute = ({ child }: JSX.Element) => {
+    if (isAuthenticated()) {
+      return child;
+    }
+    return <Redirect to="/login" />;
+  };
   return (
     <QueryClientProvider client={queryClient}>
       <OuterFrame>
@@ -21,7 +30,12 @@ const Router: React.FC<IApplication> = () => {
           <BrowserRouter>
             <Routes>
               <Route path="login/" element={<Login />} />
-              <Route path="/" element={<Dashboard />} />
+              {/* <Route path="/" element={<Dashboard />} />
+               */}
+              <Route
+                path="/"
+                element={<ProtectedRoute child={<Dashboard />} />}
+              />
               <Route path="projects/" element={<Projects />} />
               <Route
                 path="/projects/:project_slug/"
