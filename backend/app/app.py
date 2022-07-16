@@ -3,42 +3,21 @@
 TODO: Add logging
 """
 
-# from datetime import datetime, timedelta
 import re
 
 import flask_cors as cors
 import jwt
-from uuid import uuid4
-from .main import (app, datetime, jsonify, make_response, request)
+from .main import (app, datetime, jsonify, request)
 from .models import db, Action, Project, User
-from .helper import HTTP
+from .helper import HTTP, Helpers
 
 cors = cors.CORS(app, resources={r"/api/*": {"origins": "*"}})
-
-
-def gen_key():
-    return uuid4().hex
-
-
-def response_helper(payload, http_status):
-    response = make_response(payload, http_status)
-    response.headers['Content-Type'] = 'application/json'
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
-
-
-def error_helper(payload):
-    return response_helper(payload, HTTP.h500)
-
-
-def get_helper(payload):
-    return response_helper(payload, HTTP.h200)
 
 
 @app.route('/', methods=['GET'])
 def home():
     """Test if the backend is running."""
-    return get_helper(jsonify(test="alive"))
+    return Helpers.get_helper(jsonify(test="alive"))
 
 
 def clean_slug(slug):
@@ -53,21 +32,22 @@ def add_project():
     try:
         data = request.json
     except Exception as error:
-        error_helper(
+        Helpers.error_helper(
             jsonify(error=f"Error creating project: error -> {error}"))
     if not data:
-        error_helper(
+        Helpers.error_helper(
             jsonify(error=f"Error creating project: error -> No data received"))
-    data["key"] = gen_key()
+    data["key"] = Helpers.gen_key()
     try:
         new_project = Project(
-            *[data['key'], data['title'], clean_slug(data['slug']), data['done_when']])
+            *[data['key'], data['title'], clean_slug(data['slug']),
+              data['done_when']], data['user'])
         db.session.add(new_project)
         db.session.commit()
     except Exception as error:
-        error_helper(
+        Helpers.error_helper(
             jsonify(error=f"Error creating project: error -> {error}"))
-    return response_helper(jsonify(post="success, data added"), HTTP.h201)
+    return Helpers.response_helper(jsonify(post="success, data added"), HTTP.h201)
 
 
 @app.route("/api/projects/detail/<project_slug>/action/<action_id>/", methods=["PATCH", "DELETE"])
@@ -80,7 +60,7 @@ def update_project_action(project_slug, action_id):
         try:
             data = request.json
         except Exception as error:
-            return error_helper(jsonify(error=f"Error patching action: error: {error}"))
+            return Helpers.error_helper(jsonify(error=f"Error patching action: error: {error}"))
         try:
             action.description = data.get('description', action.description)
             action.done = data.get('done', action.done)
@@ -88,15 +68,15 @@ def update_project_action(project_slug, action_id):
             db.session.merge(action)
             db.session.commit()
         except Exception as error:
-            return error_helper(jsonify(error=f"Error patching action: error: {error}"))
-        return response_helper(jsonify(post="success, data updated"), HTTP.h200)
+            return Helpers.error_helper(jsonify(error=f"Error patching action: error: {error}"))
+        return Helpers.response_helper(jsonify(post="success, data updated"), HTTP.h200)
     if request.method == "DELETE":
         try:
             db.session.delete(action)
             db.session.commit()
         except Exception as error:
-            return error_helper(jsonify(error=f"Error patching action: error: {error}"))
-        return response_helper(jsonify(post="success, action deleted"), HTTP.h200)
+            return Helpers.error_helper(jsonify(error=f"Error patching action: error: {error}"))
+        return Helpers.response_helper(jsonify(post="success, action deleted"), HTTP.h200)
 
 
 @app.route("/api/projects/detail/<project_slug>/action/", methods=["POST"])
@@ -105,8 +85,8 @@ def add_project_action(project_slug):
     try:
         data = request.json
     except Exception as error:
-        return error_helper(jsonify(error=f"Error creating action: error -> {error}"))
-    data["key"] = gen_key()
+        return Helpers.error_helper(jsonify(error=f"Error creating action: error -> {error}"))
+    data["key"] = Helpers.gen_key()
     try:
         project = Project.query.filter_by(slug=project_slug).first()
         new_action = Action(
@@ -114,8 +94,8 @@ def add_project_action(project_slug):
         db.session.add(new_action)
         db.session.commit()
     except Exception as error:
-        return error_helper(jsonify(error=f"Error creating action: error -> {error}"))
-    return response_helper(jsonify(post="success, data added"), HTTP.h201)
+        return Helpers.error_helper(jsonify(error=f"Error creating action: error -> {error}"))
+    return Helpers.response_helper(jsonify(post="success, data added"), HTTP.h201)
 
 
 @app.route('/api/projects/detail/<project_slug>/', methods=['GET'])
@@ -127,7 +107,7 @@ def project_detail(project_slug):
                           'title': project.title, 'slug': project.slug,
                           'done_when': project.done_when}
     except Exception as error:
-        return error_helper(jsonify(error=f"Error fetching project: error -> {error}"))
+        return Helpers.error_helper(jsonify(error=f"Error fetching project: error -> {error}"))
     try:
         actions = Action.query.filter_by(project=project.id)
         project_return['actions'] = (
@@ -135,8 +115,8 @@ def project_detail(project_slug):
               'date_added': action.date_added, 'done': action.done,
               'this_week': action.this_week} for action in actions])
     except Exception as error:
-        return error_helper(jsonify(error=f"Error fetching actions: error -> {error}"))
-    return get_helper(jsonify(project_return))
+        return Helpers.error_helper(jsonify(error=f"Error fetching actions: error -> {error}"))
+    return Helpers.get_helper(jsonify(project_return))
 
 
 @app.route('/api/projects/', methods=['GET'])
@@ -145,33 +125,32 @@ def projects():
     try:
         data = Project.query.all()
     except Exception as error:
-        return error_helper(jsonify(error=f"Error fetching projects: error -> {error}"))
-    return get_helper(jsonify(
+        return Helpers.error_helper(jsonify(error=f"Error fetching projects: error -> {error}"))
+    return Helpers.get_helper(jsonify(
         [{'id': i.id, 'key': i.key, 'title': i.title, 'slug': i.slug, 'done_when': i.done_when} for i in data]))
 
 
 @app.route('/api/login/', methods=['POST'])
 def login():
     """Login with jwt"""
-    data = {}
     try:
         data = request.json
     except Exception as error:
-        return error_helper(jsonify(error=f"Error logging in: error -> {error}"))
+        return Helpers.error_helper(jsonify(error=f"Error logging in: error -> {error}"))
     if not data:
-        return error_helper(jsonify(error="Error logging in: error -> No data received"))
+        return Helpers.error_helper(jsonify(error="Error logging in: error -> No data received"))
     try:
         user = User.query.filter_by(
             username=data['username'], password=data['password']).first()
     except Exception as error:
-        return error_helper(jsonify(error=f"Error logging in: error -> {error}"))
+        return Helpers.error_helper(jsonify(error=f"Error logging in: error -> {error}"))
     if not user:
-        return error_helper(jsonify(error="Error logging in: error -> User not found"))
+        return Helpers.error_helper(jsonify(error="Error logging in: error -> User not found"))
     try:
         token = jwt.encode(
             {'user_id': user.id,
              'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
             app.config['SECRET_KEY'])
     except Exception as error:
-        return error_helper(jsonify(error=f"Error logging in: error -> {error}"))
-    return response_helper(jsonify(token=token.decode('UTF-8'), user=user), HTTP.h200)
+        return Helpers.error_helper(jsonify(error=f"Error logging in: error -> {error}"))
+    return Helpers.response_helper(jsonify(token=token.decode('UTF-8'), user=user), HTTP.h200)
