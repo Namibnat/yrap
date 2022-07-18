@@ -9,7 +9,7 @@ const login = () => {
   return (
     <div>
       <h1>Login</h1>
-      <form onSubmit={login}>
+      <form onSubmit={() => userLogin()}>
         <label htmlFor="username">Username</label>
         <input type="text" id="username" />
         <label htmlFor="password">Password</label>
