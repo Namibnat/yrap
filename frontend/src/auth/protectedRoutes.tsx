@@ -3,6 +3,7 @@ import { Navigate, Routes, Route } from "react-router-dom";
 import Dashboard from "../components/dashboard/dashboard";
 import Projects from "../components/projects/projects";
 import ProjectDetail from "../components/projects/project";
+import Page404 from "../components/errors/page404";
 
 const useAuth = () => {
   const user = { loggedIn: true };
@@ -22,6 +23,7 @@ const ProtectedRoutes = () => {
       <Route path="/projects/:project_slug/" element={<ProjectDetail />} />
       <Route path="routines/" element={<p>stuff will come here</p>} />
       <Route path="weekly/" element={<p>stuff will come here</p>} />
+      <Route path="*" element={<Page404 />} />
     </Routes>
   );
 };
