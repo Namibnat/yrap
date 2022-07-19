@@ -7,6 +7,7 @@ import re
 
 import flask_cors as cors
 import jwt
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from .main import (app, datetime, jsonify, request)
 from .models import db, Action, Project, User
 from .helper import HTTP, Helpers
@@ -154,3 +155,9 @@ def login():
     except Exception as error:
         return Helpers.error_helper(jsonify(error=f"Error logging in: error -> {error}"))
     return Helpers.response_helper(jsonify(token=token.decode('UTF-8'), user=user), HTTP.h200)
+
+
+@app.route('/api/logout/', methods=['GET'])
+def logout():
+    """Logout"""
+    return Helpers.response_helper(jsonify(logout="success"), HTTP.h200)
