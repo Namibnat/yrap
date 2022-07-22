@@ -1,4 +1,4 @@
-from .main import datetime, db
+from .helper import datetime, db
 
 
 class Project(db.Model):
