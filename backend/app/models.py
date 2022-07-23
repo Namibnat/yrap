@@ -69,3 +69,39 @@ class User(db.Model):
         self.weekly_review_day = weekly_review_day
         self.is_admin = is_admin
         self.registered_on = datetime.datetime.now()
+
+
+class Routine(db.Model):
+    """Database Model for Routines"""
+    __tablename__ = 'routines'
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.Integer, db.ForeignKey('users.id'))
+    key = db.Column(db.String(128), unique=True, nullable=False)
+    title = db.Column(db.String(128), unique=True, nullable=False)
+    description = db.Column(db.String(255), nullable=False)
+    date_added = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, user, key, title, description, date_added):
+        self.user = user
+        self.key = key
+        self.title = title
+        self.description = description
+        self.date_added = date_added
+
+
+class RoutineBlock(db.Model):
+    """Database Model for Routines"""
+    __tablename__ = 'routine_blocks'
+    id = db.Column(db.Integer, primary_key=True)
+    routine = db.Column(db.Integer, db.ForeignKey('routines.id'))
+    key = db.Column(db.String(128), unique=True, nullable=False)
+    description = db.Column(db.String(255), nullable=False)
+    start_time = db.Column(db.String(255), nullable=False)
+    end_time = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, routine, key, title, description, date_added):
+        self.routine = routine
+        self.key = key
+        self.title = title
+        self.description = description
+        self.date_added = date_added
