@@ -3,13 +3,11 @@ import IUser from "../types/IUsers";
 
 import axios from "axios";
 
-const slug = () => window.location.pathname.split("/login/")[1].split("/")[0];
-
 const userAPI = axios.create({
   baseURL: config.baseUrl,
 });
 
-const login = async (username: string, password: string) => {
+export const loginQ = async (username: string, password: string) => {
   const response = await userAPI.post(`/login/`, {
     username,
     password,
@@ -17,8 +15,10 @@ const login = async (username: string, password: string) => {
   return response.data;
 };
 
-const logout = async (user: IUser) => {
+export const logoutQ = async (user: IUser) => {
   return await userAPI.post(`/logout/`, {
     jwt: user.jwt,
   });
 };
+
+export default userAPI;

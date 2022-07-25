@@ -155,9 +155,9 @@ def login():
     except Exception as error:
         return Helpers.error_helper(jsonify(error=f"Error logging in: error -> {error}"), HTTP.h400)
     if not user:
-        return Helpers.error_helper(jsonify(error="Error logging in: error -> User not found"), HTTP.h401)
+        return Helpers.error_helper(jsonify(error="Error logging in: error -> User not found"), HTTP.h403)
     if not user.check_password(data['password']):
-        return Helpers.error_helper(jsonify(error="Error logging in: error -> Wrong password"), HTTP.h401)
+        return Helpers.error_helper(jsonify(error="Error logging in: error -> Wrong password"), HTTP.h403)
     try:
         access_token = create_access_token(identity=user.email)
         refresh_token = create_refresh_token(identity=user.email)

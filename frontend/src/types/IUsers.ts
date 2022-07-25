@@ -1,7 +1,7 @@
 import React from "react";
 
 export default interface IUser {
-  jwt: number;
+  jwt?: number;
   username: string;
   email?: string;
   first_name?: string;
