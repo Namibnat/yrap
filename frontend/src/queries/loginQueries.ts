@@ -7,11 +7,8 @@ const userAPI = axios.create({
   baseURL: config.baseUrl,
 });
 
-export const loginQ = async (username: string, password: string) => {
-  const response = await userAPI.post(`/login/`, {
-    username,
-    password,
-  });
+export const loginQ = async (user: IUser) => {
+  const response = await userAPI.post(`/login/`, user);
   return response.data;
 };
 

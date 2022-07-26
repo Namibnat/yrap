@@ -7,6 +7,13 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 const login = () => {
   const queryClient = useQueryClient();
 
+  // const {
+  //   isLoading: loadingProject,
+  //   isError: errorProject,
+  //   error: errorProjectText,
+  //   data: project,
+  // } = useQuery<IUser>("user", getLogin);
+
   const invalUser = () => queryClient.invalidateQueries("user");
 
   const performLoginMutation = useMutation(loginQ, {
@@ -16,7 +23,7 @@ const login = () => {
   const userLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form_json: IUser = {
-      username: "",
+      email: "",
       password: "",
       is_admin: false,
     };
@@ -27,9 +34,9 @@ const login = () => {
   return (
     <div>
       <h1>Login</h1>
-      <form onSubmit={() => userLogin(e)}>
-        <label htmlFor="username">Username</label>
-        <input type="text" id="username" />
+      <form onSubmit={(e) => userLogin(e)}>
+        <label htmlFor="email">Email</label>
+        <input type="email" id="email" />
         <label htmlFor="password">Password</label>
         <input type="password" id="password" />
         <button type="submit">Login</button>

@@ -6,11 +6,13 @@ from uuid import uuid4
 import datetime
 from flask import Flask, jsonify, request, make_response
 from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import JWTManager
 from .config import Config
 
 app = Flask(__name__)
 app.config.from_object("app.config.Config")
 app.config["JWT_SECRET_KEY"] = Config.YRAP_JWT_SECRET_KEY
+jwt = JWTManager(app)
 db = SQLAlchemy(app)
 
 

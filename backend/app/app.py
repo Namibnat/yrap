@@ -7,7 +7,7 @@ import re
 
 import flask_cors as cors
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity
-from .helper import (app, jsonify, HTTP, Helpers, request)
+from .helper import (app, jsonify, jwt, HTTP, Helpers, request)
 from .models import db, Action, Project, User
 
 cors = cors.CORS(app, resources={r"/api/*": {"origins": "*"}})
