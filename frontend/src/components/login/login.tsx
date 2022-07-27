@@ -6,13 +6,8 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 
 const login = () => {
   const queryClient = useQueryClient();
-
-  // const {
-  //   isLoading: loadingProject,
-  //   isError: errorProject,
-  //   error: errorProjectText,
-  //   data: project,
-  // } = useQuery<IUser>("user", getLogin);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const invalUser = () => queryClient.invalidateQueries("user");
 
@@ -23,12 +18,20 @@ const login = () => {
   const userLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form_json: IUser = {
-      email: "",
-      password: "",
+      email: email,
+      password: password,
       is_admin: false,
+      jwt: null,
     };
+    // const {
+    //   isLoading: loadingProject,
+    //   isError: errorProject,
+    //   error: errorProjectText,
+    //   data: user,
+    // } = useQuery<IUser>("user", loginQ(form_json));
     performLoginMutation.mutate(form_json);
-    // TODO: Pick up from here
+    // On success, redirect to /dashboard
+    window.location.href = "/dashboard";
   };
 
   return (
@@ -36,9 +39,17 @@ const login = () => {
       <h1>Login</h1>
       <form onSubmit={(e) => userLogin(e)}>
         <label htmlFor="email">Email</label>
-        <input type="email" id="email" />
+        <input
+          onChange={(e) => setEmail(e.target.value)}
+          type="email"
+          id="email"
+        />
         <label htmlFor="password">Password</label>
-        <input type="password" id="password" />
+        <input
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+          id="password"
+        />
         <button type="submit">Login</button>
       </form>
     </div>
