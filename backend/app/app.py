@@ -158,10 +158,9 @@ def login():
         return Helpers.error_helper(jsonify(error=f"Error logging in: error -> {error}"), HTTP.h400)
     try:
         access_token = create_access_token(identity=user.email)
-        refresh_token = create_refresh_token(identity=user.email)
     except Exception as error:
         return Helpers.error_helper(jsonify(error=f"Error logging in: error -> {error}"), HTTP.h400)
-    return Helpers.get_helper(jsonify(access_token=access_token, refresh_token=refresh_token))
+    return Helpers.get_helper(jsonify(access_token=access_token)
 
 
 @app.route('/api/logout/', methods=['GET'])
