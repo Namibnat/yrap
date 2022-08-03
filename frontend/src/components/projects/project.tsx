@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./project.module.scss";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import NewProjectForm from "./newProjectForm";
 import EditProjectAction from "./editProjectAction";
 import MarkDone from "./markDone";

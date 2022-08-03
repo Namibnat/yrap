@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./projects.module.scss";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getProjects, createProject } from "../../queries/projectsQueries";
 import IProject from "../../types/IProjects";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

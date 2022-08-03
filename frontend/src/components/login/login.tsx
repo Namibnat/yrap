@@ -2,9 +2,9 @@ import React from "react";
 import IUser from "../../types/IUsers";
 import { useState } from "react";
 import { loginQ } from "../../queries/loginQueries";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-const login = () => {
+const Login = () => {
   const queryClient = useQueryClient();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -56,4 +56,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

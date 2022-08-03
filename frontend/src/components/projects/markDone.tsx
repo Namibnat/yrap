@@ -2,7 +2,7 @@ import React from "react";
 import IActions from "../../types/IActions";
 import IUpdateAction from "../../types/IUpdateAction";
 
-import { UseMutationResult } from "react-query";
+import { UseMutationResult } from "@tanstack/react-query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareCheck, faSquare } from "@fortawesome/free-solid-svg-icons";
 import { AxiosResponse } from "axios";
