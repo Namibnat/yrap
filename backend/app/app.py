@@ -5,9 +5,10 @@ TODO: Add logging
 
 import re
 
+from flask import jsonify, request
 import flask_cors as cors
-from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity
-from .helper import (app, jsonify, jwt, HTTP, Helpers, request)
+from flask_jwt_extended import create_access_token, jwt_required
+from .helper import app, HTTP, Helpers
 from .models import db, Action, Project, User
 
 cors = cors.CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -20,7 +21,7 @@ def home():
 
 
 @app.errorhandler(404)
-def not_found(error):
+def not_found():
     return Helpers.error_helper(jsonify(error="Not found"), HTTP.h404)
 
 
@@ -140,10 +141,16 @@ def projects():
         [{'id': i.id, 'key': i.key, 'title': i.title, 'slug': i.slug, 'done_when': i.done_when} for i in data]))
 
 
+@app.route('/api/logout/', methods=['GET'])
+@jwt_required()
+def logout():
+    """Logout"""
+    return Helpers.response_helper(jsonify(logout="success"), HTTP.h200)
+
+
 @app.route('/api/login/', methods=['POST'])
 def login():
     """Login with flask_jwt_extended"""
-    data = {}
     try:
         data = request.json
     except Exception as error:
@@ -160,11 +167,4 @@ def login():
         access_token = create_access_token(identity=user.email)
     except Exception as error:
         return Helpers.error_helper(jsonify(error=f"Error logging in: error -> {error}"), HTTP.h400)
-    return Helpers.get_helper(jsonify(access_token=access_token)
-
-
-@app.route('/api/logout/', methods=['GET'])
-@jwt_required()
-def logout():
-    """Logout"""
-    return Helpers.response_helper(jsonify(logout="success"), HTTP.h200)
+    return Helpers.get_helper(jsonify(access_token=access_token))

@@ -3,8 +3,7 @@
 import re
 from uuid import uuid4
 
-import datetime
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from .config import Config

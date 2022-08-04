@@ -3,7 +3,7 @@ from uuid import uuid4
 from flask.cli import FlaskGroup
 
 from app import app
-from app.models import db, Project, Action, WeeklyReviewDay, User
+from app.models import db, Project, Action, User
 
 cli = FlaskGroup(app)
 
