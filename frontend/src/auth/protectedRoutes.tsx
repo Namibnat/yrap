@@ -1,4 +1,7 @@
-// import { Navigate } from "react-router";
+/**
+ * import { Navigate } from "react-router";
+ */
+
 import { Navigate, Routes, Route } from "react-router-dom";
 import Dashboard from "../components/dashboard/dashboard";
 import Projects from "../components/projects/projects";

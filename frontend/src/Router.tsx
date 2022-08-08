@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query/devtools";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Login from "./components/login/login";
 import { NavBar, OuterFrame, Footer, ContentFrame } from "./components/UI";
 import ProtectedRoutes from "./auth/protectedRoutes";
