@@ -17,7 +17,7 @@ const Projects = (): JSX.Element => {
     isError,
     error,
     data: allProjects,
-  } = useQuery<IProject[]>("projects", getProjects);
+  } = useQuery<IProject[]>(["projects"], getProjects);
 
   let projectsContent;
   if (isLoading) {
@@ -37,7 +37,7 @@ const Projects = (): JSX.Element => {
 
   const addProjectMutation = useMutation(createProject, {
     onSuccess: () => {
-      queryClient.invalidateQueries("projects");
+      queryClient.invalidateQueries(["projects"]);
     },
   });
 

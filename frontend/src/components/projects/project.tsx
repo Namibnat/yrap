@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styles from "./project.module.scss";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import NewProjectForm from "./newProjectForm";
@@ -34,21 +34,21 @@ const ProjectDetail = () => {
     isError: errorProject,
     error: errorProjectText,
     data: project,
-  } = useQuery<IProject>("project", getProject);
+  } = useQuery<IProject>(["project"], getProject);
 
-  const invalProjects = () => queryClient.invalidateQueries("project");
+  const invalidateProjects = () => queryClient.invalidateQueries(["project"]);
 
   const addProjectActionMutation = useMutation(addAction, {
-    onSuccess: () => invalProjects(),
+    onSuccess: () => invalidateProjects(),
   });
   const updateProjectAction = useMutation(updateAction, {
-    onSuccess: () => invalProjects(),
+    onSuccess: () => invalidateProjects(),
   });
   const updateActionDone = useMutation(updateDoneAction, {
-    onSuccess: () => invalProjects(),
+    onSuccess: () => invalidateProjects(),
   });
   const deleteProjectAction = useMutation(deleteAction, {
-    onSuccess: () => invalProjects(),
+    onSuccess: () => invalidateProjects(),
   });
 
   const addNewProjectAction = (e: React.FormEvent<HTMLFormElement>) => {
@@ -122,7 +122,7 @@ const ProjectDetail = () => {
                               />
                               <button
                                 className="edit"
-                                onClick={(e) => editActionDesc(action.id)}
+                                onClick={() => editActionDesc(action.id)}
                               >
                                 <FontAwesomeIcon icon={faPen} />
                               </button>
