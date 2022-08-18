@@ -8,13 +8,7 @@ const Login = () => {
     const queryClient = useQueryClient();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [loginFormValues, setLoginFormValues] = useState<IUser>({
-            email: "",
-            password: "",
-            is_admin: false,
-            jwt: null
-        }
-    )
+
 
     const invalidateUser = () => queryClient.invalidateQueries(["user"]);
 
@@ -23,7 +17,7 @@ const Login = () => {
         isError: errorProject,
         error: errorProjectText,
         data: user,
-    } = useQuery<IUser>(["user"], () => loginQ(loginFormValues));
+    } = useQuery<IUser>(["user"], loginQ);
 
     const performLoginMutation = useMutation(loginQ, {
         onSuccess: () => invalidateUser(),
@@ -31,13 +25,12 @@ const Login = () => {
 
     const userLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setLoginFormValues({
+        const form_json: IUser = {
             email: email,
             password: password,
             is_admin: false,
             jwt: null,
-        })
-
+        };
         performLoginMutation.mutate(form_json);
         // On success, redirect to /dashboard
         window.location.href = "/dashboard";

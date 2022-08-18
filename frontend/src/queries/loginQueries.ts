@@ -12,12 +12,12 @@ const userAPI = axios.create({
 });
 
 export const loginQ = async (user: IUser) => {
-  const response = await userAPI.post(`/login/`, user);
+  const response = await userAPI.post(`/login/`, user, headers);
   return response.data;
 };
 
-export const logoutQ = async (user: IUser) => {
-  return await userAPI.post(`/logout/`, headers);
-};
+// export const logoutQ = async (user: IUser) => {
+//   return await userAPI.post(`/logout/`, headers);
+// };
 
 export default userAPI;
