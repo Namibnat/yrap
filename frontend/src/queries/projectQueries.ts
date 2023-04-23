@@ -70,4 +70,3 @@ export const thisWeekAction = async (action: IActions) => {
   );
 };
 
-export default projectAPI;

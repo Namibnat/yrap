@@ -11,13 +11,19 @@ const userAPI = axios.create({
   baseURL: config.baseUrl,
 });
 
-export const loginQ = async (user: IUser) => {
+export const loginQ = async (user: IUser)  => {
   const response = await userAPI.post(`/login/`, user, headers);
-  return response.data;
+  const user_update:IUser = {
+    jwt: response.data.jwt,
+    username: user.username,
+    password: user.password,
+    email: user.email,
+    is_admin: false
+  }
+  return user_update;
 };
 
 // export const logoutQ = async (user: IUser) => {
 //   return await userAPI.post(`/logout/`, headers);
 // };
 
-export default userAPI;

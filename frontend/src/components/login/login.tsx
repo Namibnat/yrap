@@ -13,9 +13,9 @@ const Login = () => {
     const invalidateUser = () => queryClient.invalidateQueries(["user"]);
 
     const {
-        isLoading: loadingProject,
-        isError: errorProject,
-        error: errorProjectText,
+        isLoading: loadingLogin,
+        isError: errorLogin,
+        error: errorLoginText,
         data: user,
     } = useQuery<IUser>(["user"], loginQ);
 
